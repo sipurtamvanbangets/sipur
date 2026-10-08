@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio William Glorien</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #f7f9fc;
+      color: #333;
+    }
+    header {
+      background-color: #274466;
+      color: white;
+      padding: 60px 20px 100px;
+      text-align: center;
+      position: relative;
+    }
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    header h3 {
+      font-weight: 300;
+    }
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .menu-icon span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+    #menu-toggle {
+      display: none;
+    }
+    nav.menu {
+      display: none;
+      flex-direction: column;
+      background: #274466;
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+    #menu-toggle:checked + .menu-icon + nav.menu {
+      display: flex;
+    }
+    nav.menu a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 0;
+      font-weight: 500;
+    }
+    nav.menu a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #000;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
+    .highlight {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight img {
+      width: 240px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .highlight p {
+      flex: 1;
+      font-size: 18px;
+    }
+    .highlight.sand-effect::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background-image: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+      animation: sparkle 3s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes sparkle {
+      0% { left: -100%; opacity: 0.2; }
+      50% { left: 0%; opacity: 0.5; }
+      100% { left: 100%; opacity: 0; }
+    }
+    .info li {
+      list-style: none;
+      margin-bottom: 10px;
+    }
+    .info span {
+      display: inline-block;
+      min-width: 120px;
+      font-weight: 500;
+    }
+    .jobs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .job-box {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      transition: transform 0.2s;
+    }
+    .job-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: #000;
+      color: white;
+    }
+    .social-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .social-item img {
+      width: 24px;
+      height: 24px;
+      filter: invert(0.1);
+      transition: transform 0.3s ease;
+    }
+    .social-item img:hover {
+      transform: scale(1.2);
+    }
+    iframe {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16/9;
+      max-width: 100%;
+    }
+    @media screen and (max-width: 768px) {
+      header h1 {
+        font-size: 28px;
+      }
+      .section h2 {
+        font-size: 20px;
+      }
+      .job-box h3 {
+        font-size: 18px;
+      }
+      .highlight {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    #imageModal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    #modalImg {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80%;
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="menu-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <nav class="menu">
+      <a href="#tentang">Tentang Saya</a>
+      <a href="#kontak">Kontak</a>
+      <a href="#pencapaian">Pencapaian</a>
+    </nav>
+
+    <h1>William Glorien</h1>
+    <h3>— Bug Hunter And Researcher —</h3>
+  </header>
+
+  <div class="container">
+    <div class="section" id="tentang">
+      <h2>Tentang Saya</h2>
+      <p>
+        Saya William, murid 
+        <b>SMK Labor Binaan FKIP UNRI</b> dengan jurusan <u>Rekayasa Perangkat Lunak (RPL)</u>, yang saat ini masih kelas 11 RPL. Saya tinggal di Indonesia, tepatnya di kota Riau, Pekanbaru, sekitaran Kulim. Saya memiliki ketertarikan dalam bidang teknologi, terutama di dunia perangkat lunak dan keamanan siber. Selain itu, saya aktif mengasah kemampuan dalam mencari bug dan melakukan penelitian digital. Saya percaya, dengan keterampilan yang saya miliki, saya dapat memberikan kontribusi yang positif untuk dunia teknologi. Saya terus berusaha meningkatkan kemampuan teknis dan terus belajar di sepanjang perjalanan ini.
+        <br><br>
+        Jejak Pendidikan:<br>
+        • SD Cahaya Bunda School [ Swasta ]<br>
+        • SMP 9 Pekan Baru [ Negri ]<br>
+        • SMK Labor Binaan FKIP UNRI [ Swasta ]<br>
+        <font color="#f7f9fc">Kebanyakan Orang Pada Nyesal Masuk SMK Labor, Kalau Saya Masuk Sesuai Pilihan</font>
+      </p>
+      <div class="jobs">
+        <div class="job-box">
+          <h3>Bug Hunter</h3>
+          <p>Mencari Bug Pada Sebuah Situs Seperti Instansi, Perusahaan, Dan Lain-Lainnya</p>
+        </div>
+        <div class="job-box">
+          <h3>Coding Dasar</h3>
+          <p>Sudah Pasti Bisa IntiNya Ngerti Konsep Nya</p>
+        </div>
+        <br>
+        <div class="job-box">
+          <h3>Researcher</h3>
+          <p>Mampu Mencari Sedikit Jejak Digital Seseorang</p>
+        </div>
+        <div class="job-box">
+          <h3>Pro Player</h3>
+          <p>Sudah Pasti Apa Lagi Game Ep Ep Salam Booyahhhh</p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="section" id="kontak">
+      <h2>Kontak</h2>
+      <ul class="info">
+        <li><span>Nama:</span> William Glorien</li>
+        <li><span>No HP:</span> +212 651-314452</li>
+        <li><span>Email:</span> 
+        sipurtamvanbangets@gmail.com
+        <br>
+        ㅤㅤㅤㅤㅤㅤㅤ   woetangan@gmail.com
+        <br>
+        ㅤㅤㅤㅤㅤㅤㅤ   woemonyet@gmail.com
+      </li>
+        <li><span>Alamat:</span> Pekanbaru, Riau, Indonesia</li>
+      </ul>
+      <div class="social-list">
+        <div class="social-item">
+          <a href="https://instagram.com/fitwilliamx1337" target="github.com/fitwilliamx1337">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="instagram.com/fitwilliamx1337" />
+          </a>
+          <span>Instagram</span>
+        </div>
+        <div class="social-item">
+          <a href="https://youtube.com/@aneitherguy" target="github.com/fitwilliamx1337">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="github.com/fitwilliamx1337" />
+          </a>
+          <span>YouTube</span>
+        </div>
+        <div class="social-item">
+          <a href="https://github.com/fitwilliamx1337" target="github.com/fitwilliamx1337">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="github.com/fitwilliamx1337" />
+          </a>
+          <span>Github</span>
+        </div>
+        <div class="social-item">
+            <a href="https://linkedin.com/in/william-glorien-27958934a/" target="github.com/fitwilliamx1337">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="github.com/fitwilliamx1337" />
+            </a>
+            <span>LinkedIn</span>
+          </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+<div class="container">
+    <div class="section" id="pencapaian">
+      <h2>Pencapaian</h2>
+
+       <div class="highlight sand-effect">
+        <img src="https://b.top4top.io/p_359666e2h1.jpeg" alt="1 Agustus 2025" onclick="openModal(this.src)">
+       <p>[ 29 April 2025 ] <span style="color: goldenrod; font-weight: bold;">Juara 1</span> Lomba Cyber Security di <b>Politeknik Caltex Riau</b> </p>
+     </div>
+
+     <div class="highlight">
+        <img src="https://e.top4top.io/p_3770ao7bn1.png" alt="13 April 2026" onclick="openModal(this.src)">
+       <p>[ 13 April 2026 ] CSIRT Bantul</p>
+     </div>
+     
+      <div class="highlight">
+        <img src="https://j.top4top.io/p_36928m2q81.jpg" alt="09 February 2026" onclick="openModal(this.src)">
+        <p>[ 09 February 2026 ] CSIRT Pekanbaru</p>
+      </div>
+
+     <div class="highlight">
+        <img src="https://d.top4top.io/p_3689vi9sh1.jpg" alt="03 February 2026" onclick="openModal(this.src)">
+        <p>[ 03 February 2026 ] CSIRT <b>I</b>nstitut <b>T</b>eknologi <b>B</b>andung</p>
+      </div>
+
+      <div class="highlight">
+        <img src="https://f.top4top.io/p_36389p33n1.jpg" alt="10 November 2025" onclick="openModal(this.src)">
+        <p>[ 17 Desember 2025 ] CSIRT <b>U</b>niversitas <b>B</b>rawijaya</p>
+      </div>
+
+      <div class="highlight">
+        <img src="https://f.top4top.io/p_3638ysjs21.jpg" alt="10 November 2025" onclick="openModal(this.src)">
+        <p>[ 17 Desember 2025 ] CSIRT <b>Un</b>iversitas <b>Air</b>langga</p>
+      </div>
+
+     <div class="highlight">
+        <img src="https://c.top4top.io/p_3609qmqwe1.png" alt="10 November 2025" onclick="openModal(this.src)">
+        <p>[ 10 November 2025 ] CSIRT <b>Kemen</b>terian <b>Ag</b>ama</p>
+      </div>
+
+     <div class="highlight">
+        <img src="https://b.top4top.io/p_3597te0dz1.jpg" alt="05 November 2025" onclick="openModal(this.src)">
+        <p>[ 05 November 2025 ] CSIRT <b>U</b>niversitet <b>I</b> <b>O</b>slo</p>
+      </div>
+
+     <div class="highlight">
+        <img src="https://i.top4top.io/p_3596a89fv8.jpeg" alt="21 Agustus 2025" onclick="openModal(this.src)">
+        <p>[ 21 Agustus 2025 ] CSIRT <b>B</b>adan <b>M</b>etrologi, <b>K</b>imiatologi dan <b>G</b>eofisika</p>
+      </div>
+     
+     <div class="highlight">
+        <img src="https://b.top4top.io/p_3520efbke1.jpg" alt="20 Agustus 2025" onclick="openModal(this.src)">
+        <p>[ 20 Agustus 2025 ] CSIRT Jogja</p>
+      </div>
+
+     <div class="highlight">
+        <img src="https://k.top4top.io/p_3519rbvnx1.jpg" alt="12 Agustus 2025" onclick="openModal(this.src)">
+        <p>[ 12 Agustus 2025 ] CSIRT Bekasi Kota</p>
+      </div>
+
+     <div class="highlight">
+        <img src="https://f.top4top.io/p_3498okb8x0.jpg" alt="29 Juli 2025" onclick="openModal(this.src)">
+        <p>[ 29 Juli 2025 ] CSIRT <b>K</b>omisi <b>P</b>emberantasan <b>K</b>orupsi </p>
+      </div>
+
+      <div class="highlight">
+        <img src="https://g.top4top.io/p_3596pfd3c6.jpeg" alt="21 Juli 2025" onclick="openModal(this.src)">
+        <p>[ 21 Juli 2025 ] CSIRT <b>E</b>nergi dan <b>S</b>umber <b>D</b>aya <b>M</b>ineral</p>
+      </div>
+
+      <div class="highlight">
+        <img src="https://e.top4top.io/p_35963z95o4.jpeg" alt="30 Juni 2025" onclick="openModal(this.src)">
+        <p>[ 30 Juni 2025 ] CSIRT Jakarta</p>
+      </div>
+
+      <div class="highlight">
+        <img src="https://h.top4top.io/p_359681i6o7.jpeg" alt="12 Juni 2025" onclick="openModal(this.src)">
+        <p>[ 12 Juni 2025 ] CSIRT Denpasar</p>
+      </div>
+
+      <div class="highlight">
+        <img src="https://f.top4top.io/p_3596tn7yo5.jpeg" alt="15 Mei 2025" onclick="openModal(this.src)">
+        <p>[ 15 Mei 2025 ] CSIRT Jabar</p>
+      </div>
+
+      <div class="highlight">
+        <img src="https://c.top4top.io/p_359632vp62.jpeg" alt="29 April 2025" onclick="openModal(this.src)">
+        <p>[ 29 April 2025 ] CSIRT Riau</p>
+      </div>
+
+  <div id="imageModal">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <script>
+    function openModal(src) {
+      document.getElementById("imageModal").style.display = "block";
+      document.getElementById("modalImg").src = src;
+    }
+
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeModal();
+    });
+  </script>
+</body>
+</html>
